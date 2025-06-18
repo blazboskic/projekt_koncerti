@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_query($link, "DELETE FROM koncert_skupina WHERE id_k = '$id'");
     mysqli_query($link, "INSERT INTO koncert_skupina (id_k, id_s) VALUES ('$id', '$id_s')");
 
-    header("Location=admin_koncerti.php");
+    header("Location: admin_koncerti.php");
     exit;
 }
 ?>
