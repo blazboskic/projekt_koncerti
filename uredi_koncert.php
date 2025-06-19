@@ -14,7 +14,12 @@ $skupine = mysqli_query($link, "SELECT * FROM skupina");
 
 $res_s = mysqli_query($link, "SELECT id_s FROM koncert_skupina WHERE id_k = '$id'");
 $row_s = mysqli_fetch_array($res_s);
-$trenutna_skupina = isset($row_s['id_s']) ? $row_s['id_s'] : '';
+if (isset($row_s['id_s'])) {
+    $trenutna_skupina = $row_s['id_s'];
+} else {
+    $trenutna_skupina = '';
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $naziv = $_POST ['naziv'];
