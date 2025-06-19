@@ -6,7 +6,13 @@ include_once 'admin_check.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $i = $_POST ['ime_skupine'];
     $o = $_POST ['opis'];
-    $id_s = isset($_POST ['id_s']) ? $_POST ['id_s'] : '';
+
+    if (isset($_POST['id_s'])) {
+    $id_s = $_POST['id_s'];
+} else {
+    $id_s = '';
+}
+
 
     if (!empty($id_s)) {
         mysqli_query($link, "UPDATE skupina SET ime_skupine = '$i', opis = '$o' WHERE id_s = '$id_s'");
