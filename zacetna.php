@@ -2,8 +2,8 @@
 include_once "baza.php";
 include_once "seja.php";
 
-if (isset($_GET ['iskanje'])) {
-    $iskanje = $_GET ['iskanje'];
+if (isset($_GET['iskanje'])) {
+    $iskanje = $_GET['iskanje'];
 } else {
     $iskanje = '';
 }
@@ -67,6 +67,7 @@ $rezultat = mysqli_query($link, $sql);
         $naziv = htmlspecialchars($row['naziv']);
         $skupina = htmlspecialchars($row['ime_skupine']);
         $lokacija = htmlspecialchars($row['lokacija']);
+        $kraj = htmlspecialchars($row['kraj']);
         $datum = htmlspecialchars($row['datum']);
         $cena = number_format($row['cena_vstopnine'], 2);
         $opis = htmlspecialchars($row['opis']);
@@ -74,7 +75,7 @@ $rezultat = mysqli_query($link, $sql);
 
         echo "<div class='koncert'>";
         echo "<h3>" . $naziv . " – " . $skupina . "</h3>";
-        echo "<p><strong>Lokacija:</strong> " . $lokacija . "</p>";
+        echo "<p><strong>Lokacija:</strong> " . $lokacija . " – " . $kraj . "</p>";
         echo "<p><strong>Datum:</strong> " . $datum . "</p>";
         echo "<p><strong>Cena vstopnice:</strong> " . $cena . " €</p>";
         echo "<p><strong>Opis:</strong> " . $opis . "</p>";
