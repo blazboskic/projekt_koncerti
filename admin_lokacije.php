@@ -5,7 +5,13 @@ include_once 'admin_check.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $i = $_POST ['ime'];
-    $id_l = isset($_POST ['id_l']) ? $_POST ['id_l'] : '';
+    
+    if (isset($_POST['id_l'])) {
+       $id_l = $_POST['id_l'];
+    } else {
+       $id_l = '';
+    }
+
 
     if (!empty($id_l)) {
         mysqli_query($link, "UPDATE lokacija SET ime = '$i' WHERE id_l = '$id_l'");
