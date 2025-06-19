@@ -7,9 +7,9 @@ if (!isset($_SESSION['idu'])) {
     exit;
 }
 
-$id_k = $_GET ['id'];
+$id_k = $_GET['id'];
 
-$sql_k = "SELECT k.*, l.ime AS lokacija 
+$sql_k = "SELECT k.*, l.ime AS lokacija, kr.ime AS kraj 
           FROM koncerti k
           JOIN lokacija l ON k.id_l = l.id_l
           JOIN kraji kr ON l.id_kraj = kr.id_kraj
@@ -19,19 +19,19 @@ $rez_k = mysqli_query($link, $sql_k);
 $koncert = mysqli_fetch_array($rez_k);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $kolicina = $_POST ['stevilo_vstopnic'];
+    $kolicina = $_POST['stevilo_vstopnic'];
     $id_u = $_SESSION['idu'];
     $datum = date("Y-m-d");
 
-  if ($kolicina > 0) {
-    $sql = "INSERT INTO rezervacija (stevilo_vstopnic, datum_rezervacije, id_u, id_k)
-        VALUES ('$kolicina', '$datum', '$id_u', '$id_k')";
-    if (mysqli_query($link, $sql)) {
-      header("Location: moje_rez.php");
-    exit;
-    } else {
-      echo "Napaka pri vnosu rezervacije.";
-    }
+    if ($kolicina > 0) {
+        $sql = "INSERT INTO rezervacija (stevilo_vstopnic, datum_rezervacije, id_u, id_k)
+                VALUES ('$kolicina', '$datum', '$id_u', '$id_k')";
+        if (mysqli_query($link, $sql)) {
+            header("Location: moje_rez.php");
+            exit;
+        } else {
+            echo "Napaka pri vnosu rezervacije.";
+        }
     }
 }
 ?>
@@ -51,9 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="container">
   <h2>Rezervacija: <?php echo htmlspecialchars($koncert['naziv']); ?></h2><br>
 
+  <?php
+    $lokacija = htmlspecialchars($koncert['lokacija']);
+    $kraj = htmlspecialchars($koncert['kraj']);
+  ?>
+
   <div>
     <p><strong>Datum:</strong> <?php echo htmlspecialchars($koncert['datum']); ?></p>
-    <p><strong>Lokacija:</strong> <?php echo htmlspecialchars($koncert['lokacija']); ?></p>
+    <p><strong>Lokacija:</strong> <?php echo $lokacija . " – " . $kraj; ?></p>
     <p><strong>Cena vstopnice:</strong> <?php echo number_format($koncert['cena_vstopnine'], 2); ?> €</p>
     <p><strong>Opis:</strong> <?php echo htmlspecialchars($koncert['opis']); ?></p>
   </div><br>
